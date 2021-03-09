@@ -21,6 +21,13 @@ jobs:
       with:
         python-version: '3.7'
 
+    - uses: jorelali/setup-elm@v2
+      with:
+        elm-version: 0.19.1
+    - run: |
+           cd spa
+           elm make src/Main.elm --output=../flaskapp/static/elm.js
+
     - name: Build using AppService-Build
       uses: azure/appservice-build@v2
       with:
