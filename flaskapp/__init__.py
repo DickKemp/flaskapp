@@ -32,7 +32,7 @@ def create_app(test_config=None):
 
     # config
     @app.route('/config')
-    def hello():
+    def config():
         return f'Hey.  Env: {env_var}'
 
     # a simple page that says hello
