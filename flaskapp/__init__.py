@@ -5,6 +5,9 @@ from flask import Flask
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+
+    env_var = app.config.get('TEST_ENV_VARIABLE', "not set")
+
     app.config.from_mapping(
         SECRET_KEY='dev'
     )
@@ -26,6 +29,11 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
+
+    # config
+    @app.route('/config')
+    def hello():
+        return f'Hey.  Env: {env_var}'
 
     # a simple page that says hello
     @app.route('/goodbye')
