@@ -7,6 +7,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     env_var = app.config.get('TEST_ENV_VARIABLE', "not set")
+    env_var2 = os.environ['TEST_ENV_VARIABLE']
 
     app.config.from_mapping(
         SECRET_KEY='dev'
@@ -33,7 +34,8 @@ def create_app(test_config=None):
     # config
     @app.route('/config')
     def config():
-        return f'Hey.  Env: {env_var}'
+        ret = f'Hey.  Env: {env_var}, and Env2: {env_var2}'
+        return ret
 
     # a simple page that says hello
     @app.route('/goodbye')
