@@ -12,6 +12,7 @@ def create_app(test_config=None):
     }
     
     app.config["TEST_ENV_VARIABLE"] = os.environ['TEST_ENV_VARIABLE']
+    app.config["APP_PATH"] = os.environ['APP_PATH']
 
     swagger = Swagger(app)
 
