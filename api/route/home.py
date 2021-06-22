@@ -28,7 +28,7 @@ def welcome():
 
 @home_api.route('/hello')
 def hello():
-    return 'Hello, World! Here is the current app path: {current_app.config["APP_PATH"]}'
+    return f'Hello, World! Here is the current app path: {current_app.config["APP_PATH"]}'
 
 @home_api.route('/config')
 def config():
