@@ -9,3 +9,4 @@ apispec>=4.6.0
 flasgger>=0.9.5
 flask-marshmallow>=0.14.0
 marshmallow-sqlalchemy>=0.26
+blokus @ git+https://github.com/dickkemp/blockus.git

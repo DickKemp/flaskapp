@@ -5,14 +5,13 @@ from api.route.home import home_api
 
 def create_app(test_config=None):
 
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='', static_folder='api/static')
 
     app.config['SWAGGER'] = {
         'title': 'The Rich API'
     }
     
     app.config["TEST_ENV_VARIABLE"] = os.environ['TEST_ENV_VARIABLE']
-    app.config["APP_PATH"] = os.environ['APP_PATH']
 
     swagger = Swagger(app)
 

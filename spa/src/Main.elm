@@ -15,6 +15,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Time
+import Http
+import Json.Decode exposing (Decoder, field, string)
 
 
 main : Program () Model Msg
@@ -46,12 +48,13 @@ type alias Model =
     { hisTime : Int
     , herTime : Int
     , currentPlayer : Player
+    , helloStatus : String
     }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model startTimeDefault startTimeDefault Neither, Cmd.none )
+    ( Model startTimeDefault startTimeDefault Neither "Initial", Cmd.none )
 
 
 
@@ -66,6 +69,8 @@ type Msg
     | Reset
     | HeStops
     | SheStops
+    | GetHello
+    | GotHello (Result Http.Error String)
 
 
 lostTime : number -> number
@@ -108,10 +113,19 @@ update msg model =
         Reset ->
             ( { model | currentPlayer = Neither, hisTime = startTimeDefault, herTime = startTimeDefault }, Cmd.none )
 
+        GetHello ->
+            (model, getRandomHello)
+
+        GotHello result ->
+            case result of
+                Ok hello ->
+                    ({model | helloStatus = hello}, Cmd.none)
+
+                Err _ ->
+                    ({model | helloStatus = "failed" }, Cmd.none)
 
 
 -- SUBSCRIPTIONS
-
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
@@ -125,10 +139,10 @@ subscriptions _ =
 activeBtnColor : b -> b -> String
 activeBtnColor currPlayer isThisPerson =
     if currPlayer == isThisPerson then
-        "yellow"
+        "orange"
 
     else
-        "white"
+        "lightgreen"
 
 
 btnColor : { a | hisTime : number, herTime : number, currentPlayer : Player } -> Player -> String
@@ -174,4 +188,20 @@ view model =
             [ text " Pause " ]
         , button [ onClick SheStops, style "font-size" "300px", style "background-color" (btnColor model She) ]
             [ text (minsec model.herTime) ]
+        , button [ onClick GetHello, style "font-size" "300px", style "background-color" "blue" ]
+            [ text (model.helloStatus) ]            
         ]
+
+
+getRandomHello : Cmd Msg
+getRandomHello =
+  Http.get
+    { url = "/api/hello"
+    , expect = Http.expectJson GotHello helloDecoder
+    }
+
+
+helloDecoder : Decoder String
+helloDecoder =
+  (field "message" string)
+

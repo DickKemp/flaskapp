@@ -27,14 +27,46 @@ def welcome():
 
 
 @home_api.route('/hello')
+@swag_from({
+    'responses': {
+        HTTPStatus.OK.value: {
+            'description': 'response from hello'
+        }
+    }
+})
 def hello():
-    return f'Hello, World! Here is the current app path: {current_app.config["APP_PATH"]}'
+    """
+    this is the first line description
+
+    this is the more detailed description 
+    of teh service
+    ---
+    """
+    result = HelloModel()
+    result.message = 'hi rich'
+    return HelloSchema().dump(result), 200
+
+
 
 @home_api.route('/config')
+@swag_from({
+    'responses': {
+            HTTPStatus.OK.value: {
+                'description': 'response from config'
+            }
+        }
+})
 def config():
     ret = f'Hey.  Env: {current_app.config["TEST_ENV_VARIABLE"]}'
     return ret
 
 @home_api.route('/goodbye')
+@swag_from({
+    'responses': {
+            HTTPStatus.OK.value: {
+                'description': 'response from goodbye'
+            }
+        }
+})
 def goodbuy():
-    return 'Goodbye cruel world!'
+    return 'Goodbye cruel world!',200
