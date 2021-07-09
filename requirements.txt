@@ -5,8 +5,5 @@ google-api-python-client>=1.12
 google-auth>=1.25
 google-auth-oauthlib>=0.4
 google-auth-httplib2>=0.0.4
-apispec>=4.6.0
-flasgger>=0.9.5
-flask-marshmallow>=0.14.0
-marshmallow-sqlalchemy>=0.26
 blokus @ git+https://github.com/dickkemp/blockus.git
+flask-restx>=0.4.0

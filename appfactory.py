@@ -1,24 +1,15 @@
 import os
 from flask import Flask
-from flasgger import Swagger
-from api.route.home import home_api
+from apis import api
 
 def create_app(test_config=None):
-
-    app = Flask(__name__, static_url_path='', static_folder='api/static')
-
-    app.config['SWAGGER'] = {
-        'title': 'The Rich API'
-    }
-    
+    app = Flask(__name__, static_url_path='', static_folder='static')
     app.config["TEST_ENV_VARIABLE"] = os.environ['TEST_ENV_VARIABLE']
+    api.init_app(app)
 
-    swagger = Swagger(app)
-
-    app.register_blueprint(home_api, url_prefix='/api')
-
+    # app.register_blueprint(home_api, url_prefix='/api')
+    
     return app
-
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
