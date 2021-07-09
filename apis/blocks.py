@@ -109,11 +109,11 @@ def runn(name, basic, num_levels, stream, is_symmetric = False):
         c = int(i / d)
         r = int(i % d)
         box = cv.get_box_for_cell(r, c)
-        sh = PolygonShape(b.points, style=Style(color='black', size='0.05'))
+        sh = PolygonShape(b.points, style=Style(color='black', size='0.005'))
         if b.component_blocks:
-            component_polygons = [PolygonShape(bp.points, style=Style(color='red')) for bp in b.component_blocks] + [sh]
+            component_polygons = [PolygonShape(bp.points, style=Style(color='red', size='0.005')) for bp in b.component_blocks] + [sh]
             sh = CompositeShape(component_polygons)
-        cv = Canvas.add_shape3(cv, sh, box, bigbox, margin_percent=0.3, label=f"#blocks: {str(n)}")
+        cv = Canvas.add_shape3(cv, sh, box, bigbox, margin_percent=0.3, label=f"{str(n)}")
         i = i + 1
 
     Canvas.render_as_svg(cv, file=stream)
