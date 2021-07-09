@@ -12,23 +12,34 @@ from flask_restx import Namespace, Resource, fields
 api = Namespace('blocks', description='blockus operations')
 
 
-@api.route('/square')
+@api.route('/<shape>/<int:num>')
 class Blocks(Resource):
     @api.doc('get squares')
-    def get(self):
+    def get(self, shape, num):
         '''get squares'''
+        SQUARE = [Point(0.0,0.0), Point(1.0,0.0), Point(1.0,1.0), Point(0.0,1.0)]
+        TRIANGLE = [Point(0.0, 0.0), Point(0.5,(1/2)*math.sqrt(3)),Point(1.0,0.0)]
+        ISOTRIANGLE = [Point(0.0, 0.0), Point(1.0, 1.0), Point(1.0,0.0)]
+        PENTAGON = [Point(x,y) for (x,y) in pentagon(1.0)]
 
-        SQUARE = [Point(0.0,0.0), Point(1.0,0.0), Point(1.0,1.0), Point(0.0,1.0)]    
+        h = math.sin(math.pi/3.0)
+        hex = [ (-0.5,-h), (-1,0), (-0.5,h), (0.5,h), (1,0), (0.5,-h) ]
+        HEXAGON = [Point(x,y) for (x,y) in hex]
 
         stream = StringIO()
-        runn("SQUARE", SQUARE, 4, stream, True)
-        # return 'Square: ' + result ,200
-        #return stream.getvalue(), 200, {
-        #    'Content-Type': 'image/svg+xml',
-        #    'Cache-Control': 'no-cache, no-store, must-revalidate',
-        #    'Pragma': 'no-cache',
-        #    'Expires': '0'
-        #    }
+        if shape == 'square':
+            runn("SQUARE", SQUARE, num, stream, True)
+        elif shape == 'tri':
+            runn("TRIANGLE", TRIANGLE, num, stream, True)
+        elif shape == 'iso':
+            runn("ISOTRIANGLE", ISOTRIANGLE, num, stream, False)
+        elif shape == 'pent':
+            runn("PENTAGON", PENTAGON, num, stream, True)
+        elif shape == 'hex':
+            runn("HEXAGON", HEXAGON, num, stream, True)
+        else:
+            return "INVALID SHAPE:  should be one of: square, tri, iso, pent, hex"
+
         response = flask.make_response(stream.getvalue())
         response.headers['content-type'] = 'image/svg+xml'
         response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
