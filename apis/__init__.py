@@ -1,14 +1,12 @@
 from flask_restx import Api
-
 from .namespace1 import api as ns1
 from .namespace2 import api as ns2
-from .blocks import api as blocks
+from .blocks_api import api as blocks
 
 api = Api(
-    title='My Title',
+    etitle='The APIs',
     version='1.0',
-    description='A description',
-    # All API metadatas
+    description='THese are some APIs',
 )
 
 api.add_namespace(ns1)
