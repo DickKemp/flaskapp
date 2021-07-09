@@ -7,6 +7,23 @@ from blokus.point import Point
 import math
 import time
 
+def pentagon(r):
+    sum_interior_angles = (5-2)*math.pi
+    pent_angle = ((sum_interior_angles)/5)/2
+    ND = r * math.cos(pent_angle)
+    ON = r * math.sin(pent_angle)
+    BC = 2 * ND
+    FC = BC * math.sin(pent_angle)
+    BF = BC * math.cos(pent_angle)
+    FO = r -  BF
+
+    A = (-FC,FO)
+    B = (0.0, r)
+    C = (FC, FO)
+    D = (ND, -ON)
+    E = (-ND, -ON)
+    return [A,B,C,D,E]
+    
 SQUARE = [Point(0.0,0.0), Point(1.0,0.0), Point(1.0,1.0), Point(0.0,1.0)]
 TRIANGLE = [Point(0.0, 0.0), Point(0.5,(1/2)*math.sqrt(3)),Point(1.0,0.0)]
 ISOTRIANGLE = [Point(0.0, 0.0), Point(1.0, 1.0), Point(1.0,0.0)]
@@ -87,19 +104,4 @@ def runn(name, basic, num_levels, stream, is_symmetric = False):
     Canvas.render_as_svg(cv, file=stream)
     return f"{name}: Num shapes: {len(all)} --- Time: {(time.time() - start_time)} seconds ---"
 
-def pentagon(r):
-    sum_interior_angles = (5-2)*math.pi
-    pent_angle = ((sum_interior_angles)/5)/2
-    ND = r * math.cos(pent_angle)
-    ON = r * math.sin(pent_angle)
-    BC = 2 * ND
-    FC = BC * math.sin(pent_angle)
-    BF = BC * math.cos(pent_angle)
-    FO = r -  BF
 
-    A = (-FC,FO)
-    B = (0.0, r)
-    C = (FC, FO)
-    D = (ND, -ON)
-    E = (-ND, -ON)
-    return [A,B,C,D,E]
