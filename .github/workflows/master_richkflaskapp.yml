@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
 
     - name: Set up Python version
       uses: actions/setup-python@v1
@@ -26,7 +26,7 @@ jobs:
         elm-version: 0.19.1
     - run: |
            cd spa
-           elm make src/Main.elm --output=../flaskapp/static/elm.js
+           elm make src/Main.elm --output=../static/elm2.js
 
     - name: Build using AppService-Build
       uses: azure/appservice-build@v2
