@@ -23,7 +23,7 @@ jobs:
 
     - name: Generate coverage report
       run: |
-        pip install coverage
+        pip install -r requirements.txt
         coverage run -m unittest tests/*_test.py
 
     - name: Upload coverage to Codecov
