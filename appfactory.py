@@ -4,7 +4,7 @@ from apis import api
 
 def create_app(test_config=None):
     app = Flask(__name__, static_url_path='', static_folder='static')
-    app.config["TEST_ENV_VARIABLE"] = os.environ['TEST_ENV_VARIABLE']
+    app.config["TEST_ENV_VARIABLE"] = os.environ.get('TEST_ENV_VARIABLE', 'not set')
     api.init_app(app)
 
     # app.register_blueprint(home_api, url_prefix='/api')
