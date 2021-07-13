@@ -21,6 +21,18 @@ jobs:
       with:
         python-version: '3.7'
 
+    - name: Generate coverage report
+      run: |
+        pip install unittest
+        pip install coverage
+        coverage run -m unittest tests/*_.py
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: unittests
+
     - uses: jorelali/setup-elm@v2
       with:
         elm-version: 0.19.1

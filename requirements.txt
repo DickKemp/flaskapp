@@ -7,3 +7,4 @@ google-auth-oauthlib>=0.4
 google-auth-httplib2>=0.0.4
 blokus @ git+https://github.com/dickkemp/blockus.git
 flask-restx>=0.4.0
+coverage>=5.5
